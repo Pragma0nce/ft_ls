@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kcoetzee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/11 14:35:06 by kcoetzee          #+#    #+#             */
-/*   Updated: 2017/06/11 14:36:10 by kcoetzee         ###   ########.fr       */
+/*   Created: 2017/05/29 15:03:13 by kcoetzee          #+#    #+#             */
+/*   Updated: 2017/06/11 13:30:23 by kcoetzee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string.h>
-#include <stdlib.h>
-#include "libft.h"
 
-char	*ft_strnew(size_t size)
+char	*ft_strcpy(char *dst, const char *src)
 {
-	char *str;
+	char *ptr;
 
-	str = (char *)malloc(sizeof(char) * (size + 1));
-	if (str == NULL)
-		return (NULL);
-	ft_bzero(str, size + 1);
-	return (str);
+	ptr = dst;
+	while (*src)
+	{
+		*dst++ = *src++;
+	}
+	*dst = *src;
+	return (ptr);
 }

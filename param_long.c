@@ -55,5 +55,28 @@ void    display_long_format(struct dirent *list, int size)
     printf("\n");
 }
 
+void    display_all(struct dirent *list, int size)
+{
+    int i;
+    struct stat sb;
+
+    i = 0;
+    while (i < size)
+    {
+        stat(list[i].d_name, &sb);
+        printf(" ");
+        print_stats(sb);
+        printf("%s ", list[i].d_name);
+        printf("\n");
+        i++;
+    }
+}
+
+
+
+
+
+
+
 
 

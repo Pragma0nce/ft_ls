@@ -23,7 +23,7 @@ void        print_options(t_option *list)
 t_path      *add_path(char *path_name, t_path *list)
 {
     t_path *temp;
-    temp = (t_path*)malloc(sizeof(t_option));
+    temp = (t_path*)malloc(sizeof(t_path));
 
     temp->path_name = path_name;
     temp->next = list;

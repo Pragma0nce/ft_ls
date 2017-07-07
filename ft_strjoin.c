@@ -1,26 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kcoetzee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/11 14:35:06 by kcoetzee          #+#    #+#             */
-/*   Updated: 2017/06/11 14:36:10 by kcoetzee         ###   ########.fr       */
+/*   Created: 2017/06/02 11:57:17 by kcoetzee          #+#    #+#             */
+/*   Updated: 2017/06/11 13:08:44 by kcoetzee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string.h>
-#include <stdlib.h>
-#include "libft.h"
 
-char	*ft_strnew(size_t size)
+char *ft_strnew(int len);
+int	ft_strlen(const char *str);
+
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char *str;
+	char *join;
+	int s1_len;
+	int s2_len;
+	int i;
+	int j;
 
-	str = (char *)malloc(sizeof(char) * (size + 1));
-	if (str == NULL)
+	if (!s1 || !s2)
 		return (NULL);
-	ft_bzero(str, size + 1);
-	return (str);
+	i = -1;
+	j = -1;
+	s1_len = ft_strlen(s1); 
+	s2_len = ft_strlen(s2);
+	join = ft_strnew(s1_len + s2_len);
+	if (!join)
+		return (NULL);
+	while (++i < s1_len)
+		*(join + i) = *(s1 + i);
+	while (++j < s2_len)
+		*(join + i++) = *(s2 + j);
+	return (join);
 }

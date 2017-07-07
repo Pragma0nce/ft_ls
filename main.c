@@ -53,6 +53,7 @@ int     count_num_files(char *directory_path)
     return (i);
 }
 
+
 struct dirent   *load_list(char *directory_path, int *files_loaded)
 {
     struct dirent *list;
@@ -132,18 +133,19 @@ void    parse_parameters(int argc, char **argv)
     print_paths(path_list);
 }
 
-
+void    recursive();
 int	main(int argc, char **argv)
 {
-    char    dir[] = ".";
+    char    dir_name;
     struct dirent   *list;
     int             len_list;
-    int             i;
-
-    parse_parameters(argc, argv);
-    list = load_list(dir, &len_list);
+    int             i; 
+    //parse_parameters(argc, argv);
+    list = load_list("../recursion_test", &len_list);
     // Display everything
-    //display_default(list, len_list);
-    display_long_format(list, len_list);
-	return (0);
+    display_default(list, len_list);
+    //display_long_format(list, len_list);
+	//display_all(list, len_list);
+    recursive("../recursion_test");
+    return (0);
 }
