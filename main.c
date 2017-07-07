@@ -61,6 +61,7 @@ struct dirent   *load_list(char *directory_path, int *files_loaded)
     int len_list;
     int i;
 
+    //printf("+++ load_list: Attempting to read from %s\n", directory_path);
     i = 0;
     len_list = count_num_files(directory_path);
     dir = opendir(directory_path);
@@ -141,9 +142,9 @@ int	main(int argc, char **argv)
     int             len_list;
     int             i; 
     //parse_parameters(argc, argv);
-    list = load_list("../recursion_test", &len_list);
+    //list = load_list("../", &len_list);
     // Display everything
-    display_default(list, len_list);
+    //display_default(list, len_list);
     //display_long_format(list, len_list);
 	//display_all(list, len_list);
     recursive("../recursion_test");

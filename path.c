@@ -25,13 +25,14 @@ void    push_path(t_directory *dir, char *str)
         dir->path = (char*)malloc(sizeof(char) * (dir->max_len + ft_strlen(str) + 2));
         dir->max_len = (dir->max_len + ft_strlen(str) + 1);
         strcpy(dir->path, temp);
+        dir->path = ft_strjoin(dir->path, "/");
         dir->path = ft_strjoin(dir->path, str);
         dir->path_len = ft_strlen(dir->path);
         free(temp);
     }
     else
     {
-
+        dir->path = ft_strjoin(dir->path, "/");
         dir->path = ft_strjoin(dir->path, str);
         dir->path_len = ft_strlen(dir->path);
     }
