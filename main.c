@@ -39,6 +39,113 @@ void	sort_list(struct dirent *list, int size)
 	}
 }
 
+
+void	sort_list_reverse(struct dirent *list, int size)
+{
+	int n;
+	int c;
+	int d;
+	struct dirent temp;
+
+	n = size;
+	c = 0;
+	d = 0;
+	while (c < n - 1)
+	{
+		d = 0;
+		while (d < n - c - 1)
+		{
+			if (ft_strcmp(list[d].d_name, list[d + 1].d_name) < 0)
+			{
+				temp = list[d];
+				list[d] = list[d + 1];
+				list[d + 1] = temp;
+			}
+			d++;
+		}
+		c++;
+	}
+}
+
+
+void	sort_by_time(struct dirent *list, int size)
+{
+	int n;
+	int c;
+	int d;
+	struct dirent temp;
+    struct stat sb;
+    struct stat sb2;
+    char *time1;
+    char *time2;
+
+	n = size;
+	c = 0;
+	d = 0;
+	while (c < n - 1)
+	{
+		d = 0;
+		while (d < n - c - 1)
+		{
+            stat(list[d].d_name, &sb);
+			stat(list[d + 1].d_name, &sb2);
+            if (difftime(sb.st_mtime, sb2.st_mtime) == 0)
+            {
+                if (ft_strcmp(list[d].d_name, list[d + 1].d_name) > 0)
+                {
+                    //printf("fek man\n");
+                    temp = list[d];
+                    list[d] = list[d + 1];
+                    list[d + 1] = temp;
+                }
+            }
+            else if (difftime(sb.st_mtime, sb2.st_mtime) < 1)
+			{
+				temp = list[d];
+				list[d] = list[d + 1];
+				list[d + 1] = temp;
+			}
+			d++;
+		}
+		c++;
+	}
+}
+
+
+void	sort_by_time_reversed(struct dirent *list, int size)
+{
+	int n;
+	int c;
+	int d;
+	struct dirent temp;
+    struct stat sb;
+    struct stat sb2;
+    char *time1;
+    char *time2;
+
+	n = size;
+	c = 0;
+	d = 0;
+	while (c < n - 1)
+	{
+		d = 0;
+		while (d < n - c - 1)
+		{
+            stat(list[d].d_name, &sb);
+			stat(list[d + 1].d_name, &sb2);
+    
+            if (difftime(sb.st_mtime, sb2.st_mtime) > 1)
+			{
+				temp = list[d];
+				list[d] = list[d + 1];
+				list[d + 1] = temp;
+			}
+			d++;
+		}
+		c++;
+	}
+}
+
 int     count_num_files(char *directory_path)
 {
     struct dirent *list;
@@ -76,14 +183,37 @@ struct dirent   *load_list(char *directory_path, int *files_loaded)
     return(list);
 }
 
-void    display_default(struct dirent *list, int size)
+void    display_default(char *dir, t_format *format)
 {
+    
+    struct dirent *list;
+    int i = 0;
+    int len;
     // Loop going through
-	while (size--)
-	{
-		if (list[size].d_name[0] != '.')
-		printf("%s\t", list[size].d_name);
-	}	
+
+    list = load_list(dir, &len);
+    
+    if (format->has_r)
+        sort_list_reverse(list, len);
+    if (format->has_t)
+    {   
+        if (format->has_r)
+            sort_by_time_reversed(list, len);
+        else
+            sort_by_time(list, len);
+    }
+    if (format->has_l)
+    {
+        display_long_format(list, len, format);
+        return;    
+    }
+    while (i < len)
+    {
+        if ((list[i].d_name[0] == '.' && format->has_a) || (list[i].d_name[0] != '.'))
+            printf("%s\t", list[i].d_name);
+        i++;
+    }	
+    printf("\n");
 }
 
 void    parse_parameters(int argc, char **argv)
@@ -130,23 +260,66 @@ void    parse_parameters(int argc, char **argv)
         i++;
     }
 
-    print_options(option_list);
-    print_paths(path_list);
+    select_mode(option_list, path_list);
+    //print_options(option_list);
+    //print_paths(path_list);
 }
 
-void    recursive();
+t_format    *set_format(BOOL a, BOOL l, BOOL r, BOOL t)
+{
+    t_format *format;
+    format = (t_format*)malloc(sizeof(t_format));
+
+    format->has_a = a;
+    format->has_l = l;
+    format->has_r = r;
+    format->has_t = t;
+    return (format);
+}
+
+void    select_mode(t_option *option, t_path *path)
+{
+    t_format *format;
+    t_option *option_head;
+    BOOL    recursive;
+    format = set_format(FALSE, FALSE, FALSE, FALSE);
+
+    recursive = FALSE;
+    option_head = option;
+    while (option_head != NULL)
+    {
+        if (option_head->option == 'a')
+            format->has_a = TRUE;
+        else if (option_head->option == 'l')
+            format->has_l = TRUE;
+        else if (option_head->option == 'r')
+            format->has_r = TRUE;
+        else if (option_head->option == 't')
+            format->has_t = TRUE;
+        else if (option_head->option == 'R')
+            recursive = TRUE;
+        option_head = option_head->next;
+    }
+    if (recursive == TRUE)
+        display_recursive(path->path_name, format);
+    else
+        display_default(path->path_name, format);
+}
+
 int	main(int argc, char **argv)
 {
-    char    dir_name;
+    char            dir_name;
     struct dirent   *list;
     int             len_list;
     int             i; 
-    //parse_parameters(argc, argv);
+
+    parse_parameters(argc, argv);
     //list = load_list("../", &len_list);
     // Display everything
     //display_default(list, len_list);
     //display_long_format(list, len_list);
 	//display_all(list, len_list);
-    recursive("../recursion_test");
+    //printf("Path list: %s\n", path_list->path_name);
+    //recursive(path_list->path_name);
     return (0);
 }

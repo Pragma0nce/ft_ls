@@ -34,7 +34,7 @@ void    print_stats(struct stat sb)
 }
 
 
-void    display_long_format(struct dirent *list, int size)
+void    display_long_format(struct dirent *list, int size, t_format *format)
 {
     int i;
     struct stat sb;
@@ -42,41 +42,18 @@ void    display_long_format(struct dirent *list, int size)
     i = 0;
     while (i < size)
     {
-        if (list[i].d_name[0] != '.')
+
+        if ((list[i].d_name[0] == '.' && format->has_a) || (list[i].d_name[0] != '.'))
         {
             stat(list[i].d_name, &sb);
             printf(" ");
             print_stats(sb);
-            printf("%s ", list[i].d_name);
-        }
-        printf("\n");
+            printf("%s \n", list[i].d_name);
+        };
         i++;
     }
     printf("\n");
 }
-
-void    display_all(struct dirent *list, int size)
-{
-    int i;
-    struct stat sb;
-
-    i = 0;
-    while (i < size)
-    {
-        stat(list[i].d_name, &sb);
-        printf(" ");
-        print_stats(sb);
-        printf("%s ", list[i].d_name);
-        printf("\n");
-        i++;
-    }
-}
-
-
-
-
-
-
 
 
 
