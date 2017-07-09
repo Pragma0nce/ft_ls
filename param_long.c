@@ -6,7 +6,7 @@
 /*   By: kcoetzee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 12:40:18 by kcoetzee          #+#    #+#             */
-/*   Updated: 2017/07/09 12:53:43 by kcoetzee         ###   ########.fr       */
+/*   Updated: 2017/07/09 14:24:44 by kcoetzee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,44 +91,39 @@ int		get_block_total(struct dirent *list, int size,
 
 void	path_join(char **path_string, char *dir, struct dirent *list, int i)
 {
-	*path_string = (char*)malloc(sizeof(char) * (ft_strlen(dir) + ft_strlen(list[i].d_name) + 1));
+	*path_string = (char*)malloc(sizeof(char) *
+			(ft_strlen(dir) + ft_strlen(list[i].d_name) + 1));
 	ft_strcpy(*path_string, dir);
 	*path_string = ft_strjoin(*path_string, "/");
 	*path_string = ft_strjoin(*path_string, list[i].d_name);
 }
 
-void	display_long_format(struct dirent *list, int size, t_format *format, char *dir)
+void	display_long_format(struct dirent *list, int size,
+		t_format *format, char *dir)
 {
 	int			i;
 	struct stat	sb;
 	char		*path_string;
 	char		buffer[255];
-	int			fill;
 
-	i = 0;
+	i = -1;
 	lstat(list[0].d_name, &sb);
 	printf("total: %d\n", get_block_total(list, size, format, dir));
-	while (i < size)
+	while (++i < size)
 	{
 		path_join(&path_string, dir, list, i);
 		lstat(path_string, &sb);
-		if ((list[i].d_name[0] == '.' && format->has_a) || (list[i].d_name[0] != '.'))
+		if ((list[i].d_name[0] == '.' && format->has_a) ||
+				(list[i].d_name[0] != '.'))
 		{
 			print_stats(sb);
 			printf("%s", list[i].d_name);
 			if (S_ISLNK(sb.st_mode))
 			{
-				fill = readlink(path_string, buffer, 255);
-				buffer[fill] = '\0';
+				buffer[readlink(path_string, buffer, 255)] = '\0';
 				printf(" -> %s", buffer);
 			}
 			printf("\n");
-		};
-		i++;
-		free(path_string);
+		}
 	}
-	printf("\n");
 }
-
-
-
