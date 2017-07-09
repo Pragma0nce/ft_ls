@@ -53,6 +53,9 @@ void    set_path(t_directory *dir, char *str);
 void    push_path(t_directory *dir, char *str);
 void    pop_path(t_directory *dir);
 
+// PARAM_SORT
+void    sort_by_time_reversed(struct dirent *list, int size, char *dir);
+void    sort_by_time(struct dirent *list, int size, char *dir);
 // PARAM_LONG
 void    print_permissions(mode_t mode);
 void    print_stats(struct stat sb);
@@ -66,6 +69,7 @@ void        sort_list_reverse(struct dirent *list, int size);
 struct      dirent   *load_list(char *directory_path, int *files_loaded);
 t_format    *set_format(BOOL a, BOOL l, BOOL r, BOOL t);   
 int         get_path_length(t_path *path);
+void    parse_parameters(int argc, char **argv);
 
 // PARAM_RECURSIVE
 t_file      *add_file(struct dirent data, t_file *list);
