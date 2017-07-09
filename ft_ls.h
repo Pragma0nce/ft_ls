@@ -75,7 +75,7 @@ struct      dirent   *load_list(char *directory_path, int *files_loaded);
 t_format    *set_format(BOOL a, BOOL l, BOOL r, BOOL t);   
 int         get_path_length(t_path *path);
 void    parse_parameters(int argc, char **argv);
-
+void	swap(struct dirent list[], int index);
 // PARAM_RECURSIVE
 t_file      *add_file(struct dirent data, t_file *list);
 //t_directory *add_directory(
