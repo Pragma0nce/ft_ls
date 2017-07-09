@@ -46,7 +46,7 @@ void    print_stats(struct stat sb)
     printf("%s \t", pwd->pw_name);      // Print the user name
     printf("%s \t", grp->gr_name);      // Print the group name
     if (S_ISCHR(sb.st_mode) || S_ISBLK(sb.st_mode))
-        printf("%u, %u\t", major(sb.st_rdev), minor(sb.st_rdev));
+        printf("%u, %u\t", MAJOR(sb.st_rdev), MINOR(sb.st_rdev));
     else 
         printf("%ld \t", sb.st_size);       // Print the size in KB's 
     printf("%s ", time);                // Print the last time modified

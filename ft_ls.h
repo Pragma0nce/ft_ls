@@ -1,19 +1,24 @@
 #ifndef      H_FT_LS
 # define    H_FT_LS
 
-#include <stdio.h>
-#include <dirent.h>
-#include <sys/stat.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <time.h>
-#include <pwd.h>
-#include <grp.h>
-#include "libft.h"
+# include <stdio.h>
+# include <dirent.h>
+# include <sys/stat.h>
+# include <stdlib.h>
+# include <stdbool.h>
+# include <time.h>
+# include <pwd.h>
+# include <grp.h>
+# include "libft.h"
 
-#define TRUE 1
-#define FALSE 0
-#define BOOL int
+# define TRUE 1
+# define FALSE 0
+# define BOOL int
+
+# define MINORBITS 20
+# define MINORMASK ((1U << MINORBITS) - 1)
+# define MAJOR(dev) ((unsigned int) ((dev) >> MINORBITS))
+# define MINOR(dev) ((unsigned int) ((dev) & MINORMASK))
 
 typedef struct  s_format
 {
