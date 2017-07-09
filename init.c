@@ -23,7 +23,7 @@ void	parse_options(char **argv, int i, int j, t_option **option_list)
 		}
 		else
 		{
-			printf("invalid option -- %s\n", &(argv[i][j]));
+			ft_printf("invalid option -- %s\n", &(argv[i][j]));
 			exit(0);
 		}
 		j++;

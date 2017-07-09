@@ -26,7 +26,7 @@ void		print_options(t_option *list)
 {
 	while (list != NULL)
 	{
-		printf("Option added: %c\n", list->option);
+		ft_printf("Option added: %c\n", list->option);
 		list = list->next;
 	}
 }
@@ -45,7 +45,7 @@ void		print_paths(t_path *list)
 {
 	while (list != NULL)
 	{
-		printf("Path added: %s\n", list->path_name);
+		ft_printf("Path added: %s\n", list->path_name);
 		list = list->next;
 	}
 }

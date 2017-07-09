@@ -64,10 +64,10 @@ void		select_mode(t_option *option, t_path *path)
 		while (path != NULL)
 		{
 			if (len >= 2)
-				printf("%s:\n", path->path_name);
+				ft_printf("%s:\n", path->path_name);
 			display_default(path->path_name, format);
 			path = path->next;
-			printf("\n");
+			ft_printf("\n");
 		}
 	}
 }

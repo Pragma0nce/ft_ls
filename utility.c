@@ -22,7 +22,7 @@ int				count_num_files(char *directory_path)
 	dir = opendir(directory_path);
 	if (dir == NULL)
 	{
-		printf("cannot access '%s': No such file or directory\n",
+		ft_printf("cannot access '%s': No such file or directory\n",
 				directory_path);
 		exit(0);
 	}

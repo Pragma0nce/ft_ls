@@ -6,7 +6,7 @@
 /*   By: kcoetzee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 15:12:05 by kcoetzee          #+#    #+#             */
-/*   Updated: 2017/07/09 15:14:08 by kcoetzee         ###   ########.fr       */
+/*   Updated: 2017/07/09 17:18:29 by kcoetzee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	sort_by_time(struct dirent *list, int n, char *dir)
 {
 	int				c;
 	int				d;
-	struct dirent	temp;
 	struct stat		sb;
 	struct stat		sb2;
 
+	c = 0;
 	while (c < n - 1)
 	{
 		d = 0;
@@ -57,7 +57,6 @@ void	sort_by_time_reversed(struct dirent *list, int n, char *dir)
 {
 	int				c;
 	int				d;
-	struct dirent	temp;
 	struct stat		sb;
 	struct stat		sb2;
 

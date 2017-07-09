@@ -6,7 +6,7 @@
 /*   By: kcoetzee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 12:30:48 by kcoetzee          #+#    #+#             */
-/*   Updated: 2017/07/09 15:27:19 by kcoetzee         ###   ########.fr       */
+/*   Updated: 2017/07/09 17:18:33 by kcoetzee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,12 @@ void	display_default(char *dir, t_format *format)
 	while (i++ < len)
 		if ((list[i].d_name[0] == '.' && format->has_a) ||
 				(list[i].d_name[0] != '.'))
-			printf("%s\t", list[i].d_name);
-	printf("\n");
+			ft_printf("%s\t", list[i].d_name);
+	ft_printf("\n");
 }
 
 int		main(int argc, char **argv)
 {
-	char			dir_name;
-	struct dirent	*list;
-	int				len_list;
-	int				i;
-
 	parse_parameters(argc, argv);
 	return (0);
 }

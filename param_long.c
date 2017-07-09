@@ -6,7 +6,7 @@
 /*   By: kcoetzee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 12:40:18 by kcoetzee          #+#    #+#             */
-/*   Updated: 2017/07/09 15:27:18 by kcoetzee         ###   ########.fr       */
+/*   Updated: 2017/07/09 17:18:32 by kcoetzee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ void	print_permissions(mode_t mode)
 		type = 's';
 	else if (S_ISFIFO(mode))
 		type = 'p';
-	printf("%c", type);
-	printf((mode & S_IRUSR) ? "r" : "-");
-	printf((mode & S_IWUSR) ? "w" : "-");
-	printf((mode & S_IXUSR) ? "x" : "-");
-	printf((mode & S_IRGRP) ? "r" : "-");
-	printf((mode & S_IWGRP) ? "w" : "-");
-	printf((mode & S_IXGRP) ? "x" : "-");
-	printf((mode & S_IROTH) ? "r" : "-");
-	printf((mode & S_IWOTH) ? "w" : "-");
-	printf((mode & S_IXOTH) ? "x" : "-");
+	ft_printf("%c", type);
+	ft_printf((mode & S_IRUSR) ? "r" : "-");
+	ft_printf((mode & S_IWUSR) ? "w" : "-");
+	ft_printf((mode & S_IXUSR) ? "x" : "-");
+	ft_printf((mode & S_IRGRP) ? "r" : "-");
+	ft_printf((mode & S_IWGRP) ? "w" : "-");
+	ft_printf((mode & S_IXGRP) ? "x" : "-");
+	ft_printf((mode & S_IROTH) ? "r" : "-");
+	ft_printf((mode & S_IWOTH) ? "w" : "-");
+	ft_printf((mode & S_IXOTH) ? "x" : "-");
 }
 
 void	print_stats(struct stat sb)
@@ -52,14 +52,14 @@ void	print_stats(struct stat sb)
 	time = ctime(&sb.st_mtime);
 	time[ft_strlen(time) - 1] = '\0';
 	print_permissions(sb.st_mode);
-	printf(" %ld ", sb.st_nlink);
-	printf("%s \t", pwd->pw_name);
-	printf("%s \t", grp->gr_name);
+	ft_printf(" %hu ", sb.st_nlink);
+	ft_printf("%s \t", pwd->pw_name);
+	ft_printf("%s \t", grp->gr_name);
 	if (S_ISCHR(sb.st_mode) || S_ISBLK(sb.st_mode))
-		printf("%u, %u\t", MAJOR(sb.st_rdev), MINOR(sb.st_rdev));
+		ft_printf("%u, %u\t", MAJOR(sb.st_rdev), MINOR(sb.st_rdev));
 	else
-		printf("%ld \t", sb.st_size);
-	printf("%s ", time);
+		ft_printf("%lld \t", sb.st_size);
+	ft_printf("%s ", time);
 }
 
 int		get_block_total(struct dirent *list, int size,
@@ -108,7 +108,7 @@ void	display_long_format(struct dirent *list, int size,
 
 	i = -1;
 	lstat(list[0].d_name, &sb);
-	printf("total: %d\n", get_block_total(list, size, format, dir));
+	ft_printf("total: %d\n", get_block_total(list, size, format, dir));
 	while (++i < size)
 	{
 		path_join(&path_string, dir, list, i);
@@ -117,13 +117,13 @@ void	display_long_format(struct dirent *list, int size,
 				(list[i].d_name[0] != '.'))
 		{
 			print_stats(sb);
-			printf("%s", list[i].d_name);
+			ft_printf("%s", list[i].d_name);
 			if (S_ISLNK(sb.st_mode))
 			{
 				buffer[readlink(path_string, buffer, 255)] = '\0';
-				printf(" -> %s", buffer);
+				ft_printf(" -> %s", buffer);
 			}
-			printf("\n");
+			ft_printf("\n");
 		}
 	}
 }
