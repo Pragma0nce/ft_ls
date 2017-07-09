@@ -56,14 +56,16 @@ void    pop_path(t_directory *dir);
 // PARAM_LONG
 void    print_permissions(mode_t mode);
 void    print_stats(struct stat sb);
-void    display_long_format(struct dirent *list, int size, t_format *format);
+void    display_long_format(struct dirent *list, int size, t_format *format, char *dir);
 void    display_all(struct dirent *list, int size);
+int     get_block_total(struct dirent *list, int size, t_format *format, char *dir);
 
 // UTILITY
 void        sort_list(struct dirent *list, int size);
 void        sort_list_reverse(struct dirent *list, int size);
 struct      dirent   *load_list(char *directory_path, int *files_loaded);
 t_format    *set_format(BOOL a, BOOL l, BOOL r, BOOL t);   
+int         get_path_length(t_path *path);
 
 // PARAM_RECURSIVE
 t_file      *add_file(struct dirent data, t_file *list);
